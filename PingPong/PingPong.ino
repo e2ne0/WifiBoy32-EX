@@ -11,9 +11,9 @@ int score;
 
 void blit_str256(const char *str, int x, int y)
 {
-    for (int i = 0; i < strlen(str); i++) //for(宣告一個int i, i < strlen偵測文字長度(str我們輸入的文字), 達成前一項條件執行下方城市結束後i+1)
+    for (int i = 0; i < strlen(str); i++) //for(宣告一個int i, i < strlen偵測文字長度(str我們輸入的文字), 達成前一項條件執行下方程式結束後i+1)
     {
-        if (str[i] >= '@' && str[i] <= ']')                                                    //根據ASCII以十進位來說表當文字的ASCII>=64並<=93時
+        if (str[i] >= '@' && str[i] <= ']')                                                    //根據ASCII以十進位來說 當文字的ASCII>=64並<=93時
             wb32_blitBuf8(8 * (str[i] - '@'), 0, 240, x + i * 8, y, 8, 8, (uint8_t *)sprites); //擷取這邊的圖像要*8是因為每個文字大小為8*8所以每隔一個文字就要+8以A為例他在sprites的x就是8*(65-64)=1 他在第一行所以y=0
         if (str[i] >= '!' && str[i] <= '>')
             wb32_blitBuf8(8 * (str[i] - '!'), 8, 240, x + i * 8, y, 8, 8, (uint8_t *)sprites);
