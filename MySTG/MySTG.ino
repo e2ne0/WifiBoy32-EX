@@ -15,6 +15,7 @@ void setup()
         wb32_setPal8(i, wb32_color565(sprite_pal[i][0], sprite_pal[i][1], sprite_pal[i][2]));
 
     wb32_fillScreen(wbBLACK);     //設定背景(黑色)
+    
     for (int i = 0; i < 100; i++) //宣告區域變數i = 0;當i < 100時執行;執行完畢i+1
     {
         starsX[i] = random(0, 240); //於第i個星星位置X隨機一個整數(0~240)
