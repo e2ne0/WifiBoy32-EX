@@ -5,7 +5,7 @@
 uint8_t starsX[100];       //宣告陣列星星位置X
 uint16_t starsY[100];      //宣告陣列星星位置Y
 uint8_t starsSpeed[100];   //宣告陣列星星垂直速度
-uint16_t starsColor = 254; //宣告星星顏色並設為白色
+uint16_t starsColor = 65535; //宣告星星顏色並設為白色
 
 void setup()
 {
