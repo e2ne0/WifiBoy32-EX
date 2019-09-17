@@ -36,5 +36,7 @@ void loop()
             starsY[i] = 0;                                     //回到0
     }
 
+    wb32_blitBuf8(4, 75, 240, 112, 280, 16, 21, (uint8_t *)sprites); //將主角顯示出來
+
     wb32_blit8();
 }
