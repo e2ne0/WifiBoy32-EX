@@ -9,6 +9,7 @@ uint16_t starsColor = 65535;    //宣告星星顏色並設為白色
 const uint8_t buttonLeft = 17;  //宣告向左移動的按鍵腳位為常量
 const uint8_t buttonRight = 32; //宣告向右移動的按鍵腳位為常量
 int masterX = 112;              //宣告主角位置X
+uint8_t masterState = 0;        //宣告主角狀態
 
 void setup()
 {
@@ -44,15 +45,58 @@ void loop()
 
     wb32_blitBuf8(4, 75, 240, masterX, 280, 16, 21, (uint8_t *)sprites); //將主角顯示出來
 
+    wb32_blit8();
+}
+
+void MasterCtrl()
+{
+    switch (masterState)
+    {
+    case 0: //待機
+        PlayerMovement();
+        break;
+
+    case 1: //移動
+        PlayerMovement();
+        break;
+
+    case 2: //死亡
+        
+        break;
+    }
+}
+
+void PlayerMovement()
+{
     if (digitalRead(buttonLeft) == 0) //按下IO17時
-        masterX -= 3;                 //主角左移3像素
+    {
+        masterX -= 8; //主角左移8像素
+        masterState = 1;
+    }
     if (masterX < 0)
         masterX = 0;
 
     if (digitalRead(buttonRight) == 0)
-        masterX += 3; //主角右移3像素
+    {
+        masterX += 8; //主角左移8像素
+        masterState = 1;
+    }
     if (masterX > 224)
         masterX = 224;
 
-    wb32_blit8();
+    if (digitalRead(buttonLeft) == 1 && digitalRead(buttonRight) == 1) //兩個案件都鬆開時
+        masterState = 0;
 }
+
+/*void blit_num256(uint8_t num, uint16_t x, uint16_t y, uint8_t color_mode)
+{
+    uint8_t d[2];
+
+    d[0] = num / 10;
+    d[1] = num - d[1] * 10; //算出num的個位放入d[4]
+
+    for (int i = 0; i < 2; i++)
+    {
+        wb32_blitBuf8(d[i] * 8 + 120, color_mode * 8, 240, x + i * 8, y, 8, 8, (uint8_t *)sprites); //將d[0]~d[4]逐個顯示並排列
+    }
+}*/
