@@ -43,8 +43,8 @@ void loop()
             starsY[i] = 0;                                     //回到0
     }
 
-    wb32_blitBuf8(4, 75, 240, masterX, 280, 16, 21, (uint8_t *)sprites); //將主角顯示出來
-
+    MasterCtrl();
+    
     wb32_blit8();
 }
 
@@ -61,31 +61,32 @@ void MasterCtrl()
         break;
 
     case 2: //死亡
-        
+
         break;
     }
 }
 
 void PlayerMovement()
 {
-    if (digitalRead(buttonLeft) == 0) //按下IO17時
+    wb32_blitBuf8(4, 75, 240, masterX, 280, 16, 21, (uint8_t *)sprites); //將主角顯示出來
+    if (digitalRead(buttonLeft) == 0)                                    //按下IO17時
     {
-        masterX -= 8; //主角左移8像素
-        masterState = 1;
+        masterX -= 8;    //主角左移8像素
+        masterState = 1; //主角進入移動狀態
     }
     if (masterX < 0)
         masterX = 0;
 
     if (digitalRead(buttonRight) == 0)
     {
-        masterX += 8; //主角左移8像素
+        masterX += 8;    //主角右移8像素
         masterState = 1;
     }
     if (masterX > 224)
         masterX = 224;
 
-    if (digitalRead(buttonLeft) == 1 && digitalRead(buttonRight) == 1) //兩個案件都鬆開時
-        masterState = 0;
+    if (digitalRead(buttonLeft) == 1 && digitalRead(buttonRight) == 1) //兩個按鍵都鬆開時
+        masterState = 0;                                               //主角進入待機狀態
 }
 
 /*void blit_num256(uint8_t num, uint16_t x, uint16_t y, uint8_t color_mode)
