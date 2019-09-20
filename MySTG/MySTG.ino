@@ -10,11 +10,12 @@ const uint8_t buttonLeft = 17;  //宣告向左移動的按鍵腳位為常量
 const uint8_t buttonRight = 32; //宣告向右移動的按鍵腳位為常量
 int masterX = 112;              //宣告主角位置X
 uint8_t masterState = 0;        //宣告主角狀態
-int enemyX[10];                 //宣告敵方位置X
-int enemyY[10];                 //宣告敵方位置X
+int enemyX[1000];               //宣告敵方位置X
+int enemyY[1000];               //宣告敵方位置X
 unsigned long currentTime;      //宣告現在時間的變數
 unsigned long enemySpawnCD;     //宣告敵人生成時間的變數
-int enemyNum = 0;               //宣告用於控制敵機編號的變數
+bool enemyAlive[1000];          //宣告控制敵機存活的陣列
+unsigned int enemyNo = 0;       //宣告為敵機編號的變數
 
 void setup()
 {
@@ -35,13 +36,19 @@ void setup()
     pinMode(buttonLeft, INPUT);
     pinMode(buttonRight, INPUT);
 
-    currentTime = millis();     //現在時間為經過時間
-    enemySpawnCD = currentTime; //讓出生CD為現在就能生成敵人
+    currentTime = millis(); //現在時間為經過時間
+
+    enemySpawnCD = currentTime + 1000; //讓出生CD為現在就能生成敵人
+    enemyAlive[0] = true;              //設置第一個敵人為存活
+    enemyX[0] = random(0, 229);
+    enemyY[0] = -11;
 }
 
 void loop()
 {
     wb32_clearBuf8();
+
+    currentTime = millis();
 
     for (int i = 0; i < 100; i++)
     {
@@ -52,6 +59,32 @@ void loop()
     }
 
     MasterCtrl();
+
+    if (currentTime >= enemySpawnCD)
+    {
+        enemyNo += 1;
+        enemySpawnCD = currentTime + random(500, 800);
+        enemyAlive[enemyNo] = true;
+    }
+    for (int i; i <= enemyNo; i++)
+    {
+        if (enemyAlive[i])
+        {
+            enemyX[i + 1] = random(0, 229);
+            enemyY[i + 1] = 0;
+
+            enemyY[i] += 3;
+            wb32_blitBuf8(3, 150, 240, enemyX[i], enemyY[i], 11, 11, (uint8_t *)sprites);
+            if (enemyY[i] > 320)
+            {
+                enemyAlive[i] = false;
+            }
+        }
+        else
+        {
+            
+        }
+    }
 
     wb32_blit8();
 }
