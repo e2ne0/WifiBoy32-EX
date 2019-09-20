@@ -10,6 +10,11 @@ const uint8_t buttonLeft = 17;  //宣告向左移動的按鍵腳位為常量
 const uint8_t buttonRight = 32; //宣告向右移動的按鍵腳位為常量
 int masterX = 112;              //宣告主角位置X
 uint8_t masterState = 0;        //宣告主角狀態
+int enemyX[10];                 //宣告敵方位置X
+int enemyY[10];                 //宣告敵方位置X
+unsigned long currentTime;      //宣告現在時間的變數
+unsigned long enemySpawnCD;     //宣告敵人生成時間的變數
+int enemyNum = 0;               //宣告用於控制敵機編號的變數
 
 void setup()
 {
@@ -26,9 +31,12 @@ void setup()
         starsY[i] = random(0, 320);
         starsSpeed[i] = random(2, 5);
     }
-
+    //pinMode(35, INPUT);
     pinMode(buttonLeft, INPUT);
     pinMode(buttonRight, INPUT);
+
+    currentTime = millis();     //現在時間為經過時間
+    enemySpawnCD = currentTime; //讓出生CD為現在就能生成敵人
 }
 
 void loop()
@@ -44,7 +52,7 @@ void loop()
     }
 
     MasterCtrl();
-    
+
     wb32_blit8();
 }
 
@@ -79,7 +87,7 @@ void PlayerMovement()
 
     if (digitalRead(buttonRight) == 0)
     {
-        masterX += 8;    //主角右移8像素
+        masterX += 8; //主角右移8像素
         masterState = 1;
     }
     if (masterX > 224)
@@ -99,5 +107,32 @@ void PlayerMovement()
     for (int i = 0; i < 2; i++)
     {
         wb32_blitBuf8(d[i] * 8 + 120, color_mode * 8, 240, x + i * 8, y, 8, 8, (uint8_t *)sprites); //將d[0]~d[4]逐個顯示並排列
+    }
+}*/
+
+/*void bullet()
+{
+    switch (bulletState)
+    {
+    case 0:
+
+        wb32_blitBuf8(11, 70, 240, masterX, bulletY, 2, 5, (uint8_t *)sprites);
+        bulletX = masterX;
+        bulletState++;
+        break;
+
+    case 1:
+        bulletY -= 100;
+        wb32_blitBuf8(11, 70, 240, bulletX, bulletY, 2, 5, (uint8_t *)sprites);
+        if (bulletY < 100)
+        {
+            bulletState++;
+        }
+        break;
+
+    case 2:
+        bulletY = 275;
+        shoot = false;
+        return;
     }
 }*/
