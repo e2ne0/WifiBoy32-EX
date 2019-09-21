@@ -10,11 +10,11 @@ const uint8_t buttonLeft = 17;  //宣告向左移動的按鍵腳位為常量
 const uint8_t buttonRight = 32; //宣告向右移動的按鍵腳位為常量
 int masterX = 112;              //宣告主角位置X
 uint8_t masterState = 0;        //宣告主角狀態
-int enemyX[1000];               //宣告敵方位置X
-int enemyY[1000];               //宣告敵方位置X
+int enemyX[10];               //宣告敵方位置X
+int enemyY[10];               //宣告敵方位置X
 unsigned long currentTime;      //宣告現在時間的變數
 unsigned long enemySpawnCD;     //宣告敵人生成時間的變數
-bool enemyAlive[1000];          //宣告控制敵機存活的陣列
+bool enemyAlive[10];          //宣告控制敵機存活的陣列
 unsigned int enemyNo = 0;       //宣告為敵機編號的變數
 
 void setup()
@@ -31,6 +31,11 @@ void setup()
         starsX[i] = random(0, 240); //於第i個星星位置X隨機一個整數(0~240)
         starsY[i] = random(0, 320);
         starsSpeed[i] = random(2, 5);
+        if (i < 10)
+        {
+            enemyX[i] = random(0, 229);        //初始化敵人的X
+            enemyY[i] = -13;                   //初始化敵人的Y
+        }
     }
     //pinMode(35, INPUT);
     pinMode(buttonLeft, INPUT);
@@ -40,8 +45,6 @@ void setup()
 
     enemySpawnCD = currentTime + 1000; //讓出生CD為現在就能生成敵人
     enemyAlive[0] = true;              //設置第一個敵人為存活
-    enemyX[0] = random(0, 229);
-    enemyY[0] = -11;
 }
 
 void loop()
@@ -63,29 +66,28 @@ void loop()
     if (currentTime >= enemySpawnCD)
     {
         enemyNo += 1;
-        enemySpawnCD = currentTime + random(500, 800);
-        enemyAlive[enemyNo] = true;
+        enemySpawnCD = currentTime + random(1000, 1500);
+        enemyAlive[enemyNo % 10] = true;
     }
-    for (int i; i <= enemyNo; i++)
+    for (int i; i < 10; i++)
     {
         if (enemyAlive[i])
         {
-            enemyX[i + 1] = random(0, 229);
-            enemyY[i + 1] = 0;
-
             enemyY[i] += 3;
             wb32_blitBuf8(3, 150, 240, enemyX[i], enemyY[i], 11, 11, (uint8_t *)sprites);
             if (enemyY[i] > 320)
             {
+                enemyX[i] = random(0, 229);
+                enemyY[i] = -13;
                 enemyAlive[i] = false;
             }
         }
         else
         {
-            
+            continue;
         }
     }
-
+//enemyNo - (enemyNo%1000)
     wb32_blit8();
 }
 
