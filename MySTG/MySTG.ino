@@ -87,7 +87,7 @@ void loop()
             continue;
         }
     }
-//enemyNo - (enemyNo%1000)
+
     wb32_blit8();
 }
 
