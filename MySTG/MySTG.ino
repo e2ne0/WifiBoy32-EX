@@ -10,15 +10,17 @@ const uint8_t buttonLeft = 17;  //宣告向左移動的按鍵腳位為常量
 const uint8_t buttonRight = 32; //宣告向右移動的按鍵腳位為常量
 int masterX = 112;              //宣告主角位置X
 uint8_t masterState = 0;        //宣告主角狀態
-int enemyX[10];               //宣告敵方位置X
-int enemyY[10];               //宣告敵方位置X
+int enemyX[10];                 //宣告敵方位置X
+int enemyY[10];                 //宣告敵方位置X
 unsigned long currentTime;      //宣告現在時間的變數
 unsigned long enemySpawnCD;     //宣告敵人生成時間的變數
-bool enemyAlive[10];          //宣告控制敵機存活的陣列
+bool enemyAlive[10];            //宣告控制敵機存活的陣列
 unsigned int enemyNo = 0;       //宣告為敵機編號的變數
 
 void setup()
 {
+    currentTime = millis(); //現在時間為經過時間
+
     wb32_init();
     wb32_initBuf8();
     for (int i = 0; i < 256; i++)
@@ -31,19 +33,17 @@ void setup()
         starsX[i] = random(0, 240); //於第i個星星位置X隨機一個整數(0~240)
         starsY[i] = random(0, 320);
         starsSpeed[i] = random(2, 5);
-        if (i < 10)
+        if (i < 10) //加到10前執行以下
         {
-            enemyX[i] = random(0, 229);        //初始化敵人的X
-            enemyY[i] = -13;                   //初始化敵人的Y
+            enemyX[i] = random(0, 229); //初始化敵人的X
+            enemyY[i] = -13;            //初始化敵人的Y
         }
     }
     //pinMode(35, INPUT);
     pinMode(buttonLeft, INPUT);
     pinMode(buttonRight, INPUT);
 
-    currentTime = millis(); //現在時間為經過時間
-
-    enemySpawnCD = currentTime + 1000; //讓出生CD為現在就能生成敵人
+    enemySpawnCD = currentTime + 1000; //讓下台敵機出生CD為1秒後
     enemyAlive[0] = true;              //設置第一個敵人為存活
 }
 
@@ -51,7 +51,7 @@ void loop()
 {
     wb32_clearBuf8();
 
-    currentTime = millis();
+    currentTime = millis(); //當前時間每禎以毫秒更新
 
     for (int i = 0; i < 100; i++)
     {
@@ -63,28 +63,28 @@ void loop()
 
     MasterCtrl();
 
-    if (currentTime >= enemySpawnCD)
+    if (currentTime >= enemySpawnCD) //當現在時間到達敵人出生的CD時
     {
-        enemyNo += 1;
-        enemySpawnCD = currentTime + random(1000, 1500);
-        enemyAlive[enemyNo % 10] = true;
+        enemyNo += 1;                                    //敵方編號+1
+        enemySpawnCD = currentTime + random(1000, 1500); //設置下一個敵人出生的時間
+        enemyAlive[enemyNo % 10] = true;                 //下一個敵人是否存活 %為餘數運算子
     }
     for (int i; i < 10; i++)
     {
-        if (enemyAlive[i])
+        if (enemyAlive[i]) //當本敵人存活時
         {
-            enemyY[i] += 3;
+            enemyY[i] += 3; //設定向下飛的速度
             wb32_blitBuf8(3, 150, 240, enemyX[i], enemyY[i], 11, 11, (uint8_t *)sprites);
-            if (enemyY[i] > 320)
+            if (enemyY[i] > 320) //當飛出畫面底部時
             {
-                enemyX[i] = random(0, 229);
-                enemyY[i] = -13;
-                enemyAlive[i] = false;
+                enemyX[i] = random(0, 229); //重新設置X位置
+                enemyY[i] = -13;            //回到螢幕上方
+                enemyAlive[i] = false;      //設定本敵人為未存活
             }
         }
-        else
+        else //當本敵人未存活時
         {
-            continue;
+            continue; //繼續執行本for
         }
     }
 
