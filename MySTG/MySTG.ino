@@ -18,10 +18,10 @@ bool enemyAlive[10];            //宣告控制敵機存活的陣列
 unsigned int enemyNo = 0;       //宣告為敵機編號的變數
 int bulletX[100];               //宣告子彈位置X
 int bulletY[100];               //宣告子彈位置Y
-int bulletState[100];           //宣告子彈狀態
 unsigned long bulletSpawnCD;    //宣告子彈生成時間的變數
+int bulletState[100];           //宣告子彈狀態
 bool bulletAlive[100];          //宣告控制子彈存活的陣列
-unsigned int bulletNo;          //宣告為子彈編號的變數
+unsigned int bulletNo = 0;          //宣告為子彈編號的變數
 
 void setup()
 {
