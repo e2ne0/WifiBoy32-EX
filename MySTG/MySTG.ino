@@ -65,7 +65,7 @@ void loop()
 
     if (currentTime >= enemySpawnCD) //當現在時間到達敵機出生的CD時
     {
-        enemyAlive[enemyNo] = true;                      //敵機設為存活 
+        enemyAlive[enemyNo] = true; //敵機設為存活
         if (enemyNo < 10)
             enemyNo += 1; //敵機編號+1
         else
@@ -86,10 +86,8 @@ void loop()
                 enemyAlive[i] = false;      //設定本敵機為未存活
             }
         }
-        else //當本敵機未存活時
-        {
+        else          //當本敵機未存活時
             continue; //繼續執行
-        }
     }
 
     wb32_blit8();
