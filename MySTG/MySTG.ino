@@ -11,11 +11,17 @@ const uint8_t buttonRight = 32; //宣告向右移動的按鍵腳位為常量
 int masterX = 112;              //宣告主角位置X
 uint8_t masterState = 0;        //宣告主角狀態
 int enemyX[10];                 //宣告敵方位置X
-int enemyY[10];                 //宣告敵方位置X
+int enemyY[10];                 //宣告敵方位置Y
 unsigned long currentTime;      //宣告現在時間的變數
 unsigned long enemySpawnCD;     //宣告敵人生成時間的變數
 bool enemyAlive[10];            //宣告控制敵機存活的陣列
 unsigned int enemyNo = 0;       //宣告為敵機編號的變數
+int bulletX[100];               //宣告子彈位置X
+int bulletY[100];               //宣告子彈位置Y
+int bulletState[100];           //宣告子彈狀態
+unsigned long bulletSpawnCD;    //宣告子彈生成時間的變數
+bool bulletAlive[100];          //宣告控制子彈存活的陣列
+unsigned int bulletNo;          //宣告為子彈編號的變數
 
 void setup()
 {
@@ -33,7 +39,8 @@ void setup()
         starsX[i] = random(0, 240); //於第i個星星位置X隨機一個整數(0~240)
         starsY[i] = random(0, 320);
         starsSpeed[i] = random(2, 5);
-        if (i < 10) //加到10前執行以下
+        bulletY[i] = 275; //初始化子彈的Y
+        if (i < 10)       //加到10前執行以下
         {
             enemyX[i] = random(0, 229); //初始化敵機的X
             enemyY[i] = -13;            //初始化敵機的Y
@@ -45,6 +52,8 @@ void setup()
 
     enemySpawnCD = currentTime + 1000; //讓下台敵機出生CD為1秒後
     enemyAlive[0] = true;              //設置第一個敵機為存活
+
+    bulletSpawnCD = currentTime; //讓第一顆子彈馬上到出生時間
 }
 
 void loop()
@@ -61,34 +70,29 @@ void loop()
             starsY[i] = 0;                                     //回到0
     }
 
-    MasterCtrl();
-
-    if (currentTime >= enemySpawnCD) //當現在時間到達敵機出生的CD時
+    if (currentTime >= bulletSpawnCD)
     {
-        enemyAlive[enemyNo] = true; //敵機設為存活
-        if (enemyNo < 10)
-            enemyNo += 1; //敵機編號+1
+        bulletAlive[bulletNo] = true;
+        bulletState[bulletNo] = 0; //將子彈狀態歸0
+        if (bulletNo < 99)
+            bulletNo += 1;
         else
-            enemyNo = 0; //敵機編號回到0
+            bulletNo = 0;
+        bulletSpawnCD = currentTime + 200;
+    }
 
-        enemySpawnCD = currentTime + random(1000, 1500); //設置下一個敵機出生的時間
-    }
-    for (int i; i < 10; i++)
+    for (int i = 0; i < 100; i++)
     {
-        if (enemyAlive[i]) //當本敵機存活時
+        if (bulletAlive[i])
         {
-            enemyY[i] += 3; //設定向下飛的速度
-            wb32_blitBuf8(3, 150, 240, enemyX[i], enemyY[i], 11, 11, (uint8_t *)sprites);
-            if (enemyY[i] > 320) //當飛出畫面底部時
-            {
-                enemyX[i] = random(0, 229); //重新設置X位置
-                enemyY[i] = -13;            //回到螢幕上方
-                enemyAlive[i] = false;      //設定本敵機為未存活
-            }
+            Bullet(i);
         }
-        else          //當本敵機未存活時
-            continue; //繼續執行
+        else
+            continue;
     }
+
+    MasterCtrl();
+    EnemyCtrl();
 
     wb32_blit8();
 }
@@ -134,6 +138,62 @@ void PlayerMovement()
         masterState = 0;                                               //主角進入待機狀態
 }
 
+void EnemyCtrl()
+{
+    if (currentTime >= enemySpawnCD) //當現在時間到達敵機出生的CD時
+    {
+        enemyAlive[enemyNo] = true; //敵機設為存活
+        if (enemyNo < 9)
+            enemyNo += 1; //敵機編號+1
+        else
+            enemyNo = 0; //敵機編號回到0
+
+        enemySpawnCD = currentTime + random(1000, 1500); //設置下一個敵機出生的時間
+    }
+    for (int i; i < 10; i++)
+    {
+        if (enemyAlive[i]) //當本敵機存活時
+        {
+            enemyY[i] += 3; //設定向下飛的速度
+            wb32_blitBuf8(3, 150, 240, enemyX[i], enemyY[i], 11, 11, (uint8_t *)sprites);
+            if (enemyY[i] > 320) //當飛出畫面底部時
+            {
+                enemyX[i] = random(0, 229); //重新設置X位置
+                enemyY[i] = -13;            //回到螢幕上方
+                enemyAlive[i] = false;      //設定本敵機為未存活
+            }
+        }
+        else          //當本敵機未存活時
+            continue; //繼續執行
+    }
+}
+
+void Bullet(unsigned int BulletNo) //(需要控制的子彈)
+{
+    switch (bulletState[BulletNo])
+    {
+    case 0: //出生
+        wb32_blitBuf8(11, 70, 240, masterX + 6, bulletY[BulletNo], 2, 5, (uint8_t *)sprites);
+        bulletX[BulletNo] = masterX + 6; //子彈會從主角所在的X發射
+        bulletState[BulletNo]++;
+        break;
+
+    case 1: //移動
+        bulletY[BulletNo] -= 10;
+        wb32_blitBuf8(11, 70, 240, bulletX[BulletNo], bulletY[BulletNo], 2, 5, (uint8_t *)sprites);
+        if (bulletY[BulletNo] < 0)
+        {
+            bulletState[BulletNo]++;
+        }
+        break;
+
+    case 2: //死亡
+        bulletY[BulletNo] = 275;
+        bulletAlive[BulletNo] = false;
+        break;
+    }
+}
+
 /*void blit_num256(uint8_t num, uint16_t x, uint16_t y, uint8_t color_mode)
 {
     uint8_t d[2];
@@ -144,32 +204,5 @@ void PlayerMovement()
     for (int i = 0; i < 2; i++)
     {
         wb32_blitBuf8(d[i] * 8 + 120, color_mode * 8, 240, x + i * 8, y, 8, 8, (uint8_t *)sprites); //將d[0]~d[4]逐個顯示並排列
-    }
-}*/
-
-/*void bullet()
-{
-    switch (bulletState)
-    {
-    case 0:
-
-        wb32_blitBuf8(11, 70, 240, masterX, bulletY, 2, 5, (uint8_t *)sprites);
-        bulletX = masterX;
-        bulletState++;
-        break;
-
-    case 1:
-        bulletY -= 100;
-        wb32_blitBuf8(11, 70, 240, bulletX, bulletY, 2, 5, (uint8_t *)sprites);
-        if (bulletY < 100)
-        {
-            bulletState++;
-        }
-        break;
-
-    case 2:
-        bulletY = 275;
-        shoot = false;
-        return;
     }
 }*/
