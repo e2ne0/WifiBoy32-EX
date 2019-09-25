@@ -21,7 +21,7 @@ int bulletY[100];               //宣告子彈位置Y
 unsigned long bulletSpawnCD;    //宣告子彈生成時間的變數
 int bulletState[100];           //宣告子彈狀態
 bool bulletAlive[100];          //宣告控制子彈存活的陣列
-unsigned int bulletNo = 0;          //宣告為子彈編號的變數
+unsigned int bulletNo = 0;      //宣告為子彈編號的變數
 
 void setup()
 {
@@ -70,27 +70,6 @@ void loop()
             starsY[i] = 0;                                     //回到0
     }
 
-    if (currentTime >= bulletSpawnCD)
-    {
-        bulletAlive[bulletNo] = true;
-        bulletState[bulletNo] = 0; //將子彈狀態歸0
-        if (bulletNo < 99)
-            bulletNo += 1;
-        else
-            bulletNo = 0;
-        bulletSpawnCD = currentTime + 200;
-    }
-
-    for (int i = 0; i < 100; i++)
-    {
-        if (bulletAlive[i])
-        {
-            Bullet(i);
-        }
-        else
-            continue;
-    }
-
     MasterCtrl();
     EnemyCtrl();
 
@@ -103,10 +82,12 @@ void MasterCtrl()
     {
     case 0: //待機
         PlayerMovement();
+        BulletCtrl();
         break;
 
     case 1: //移動
         PlayerMovement();
+        BulletCtrl();
         break;
 
     case 2: //死亡
@@ -168,29 +149,46 @@ void EnemyCtrl()
     }
 }
 
-void Bullet(unsigned int BulletNo) //(需要控制的子彈)
+void BulletCtrl()
 {
-    switch (bulletState[BulletNo])
+    if (currentTime >= bulletSpawnCD)
     {
-    case 0: //出生
-        wb32_blitBuf8(11, 70, 240, masterX + 6, bulletY[BulletNo], 2, 5, (uint8_t *)sprites);
-        bulletX[BulletNo] = masterX + 6; //子彈會從主角所在的X發射
-        bulletState[BulletNo]++;
-        break;
-
-    case 1: //移動
-        bulletY[BulletNo] -= 10;
-        wb32_blitBuf8(11, 70, 240, bulletX[BulletNo], bulletY[BulletNo], 2, 5, (uint8_t *)sprites);
-        if (bulletY[BulletNo] < 0)
+        bulletAlive[bulletNo] = true;
+        bulletState[bulletNo] = 0; //將子彈狀態歸0
+        if (bulletNo < 99)
+            bulletNo += 1;
+        else
+            bulletNo = 0;
+        bulletSpawnCD = currentTime + 200;
+    }
+    for (int i = 0; i < 100; i++)
+    {
+        if (bulletAlive[i])
         {
-            bulletState[BulletNo]++;
-        }
-        break;
+            switch (bulletState[i])
+            {
+            case 0:                       //出生定位
+                bulletX[i] = masterX + 6; //子彈會從主角的中心發射
+                bulletState[i]++;
+                break;
 
-    case 2: //死亡
-        bulletY[BulletNo] = 275;
-        bulletAlive[BulletNo] = false;
-        break;
+            case 1: //顯示與移動
+                bulletY[i] -= 10;
+                wb32_blitBuf8(11, 70, 240, bulletX[i], bulletY[i], 2, 5, (uint8_t *)sprites);
+                if (bulletY[i] < 0)
+                {
+                    bulletState[i]++;
+                }
+                break;
+
+            case 2: //消失
+                bulletY[i] = 275;
+                bulletAlive[i] = false;
+                break;
+            }
+        }
+        else
+            continue;
     }
 }
 
