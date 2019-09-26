@@ -22,6 +22,7 @@ unsigned long bulletSpawnCD;    //宣告子彈生成時間的變數
 int bulletState[100];           //宣告子彈狀態
 bool bulletAlive[100];          //宣告控制子彈存活的陣列
 unsigned int bulletNo = 0;      //宣告為子彈編號的變數
+int score = 0;                   
 
 void setup()
 {
@@ -192,15 +193,29 @@ void BulletCtrl()
     }
 }
 
-/*void blit_num256(uint8_t num, uint16_t x, uint16_t y, uint8_t color_mode)
+void Collision()
 {
-    uint8_t d[2];
-
-    d[0] = num / 10;
-    d[1] = num - d[1] * 10; //算出num的個位放入d[4]
-
-    for (int i = 0; i < 2; i++)
+    for (int i = 0; i < 100; i++)
     {
-        wb32_blitBuf8(d[i] * 8 + 120, color_mode * 8, 240, x + i * 8, y, 8, 8, (uint8_t *)sprites); //將d[0]~d[4]逐個顯示並排列
+        if (bulletAlive[i])
+        {
+            for (int j = 0; j < 10; j++)
+            {
+                if (enemyAlive[j])
+                {
+                    if (enemyX[j] <= bulletX[i] + 1 && enemyX[j] + 10 >= bulletX[i] && enemyY[j] + 10 >= bulletY[i])
+                    {
+                        enemyAlive[j] = false;
+                        enemyX[j] = random(0, 229);
+                        enemyY[j] = -13;
+                        bulletState[i] = 2;
+                    }
+                }
+                else
+                    continue;
+            }
+        }
+        else
+            continue;
     }
-}*/
+}
