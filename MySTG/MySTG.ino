@@ -24,6 +24,41 @@ bool bulletAlive[100];          //宣告控制子彈存活的陣列
 unsigned int bulletNo = 0;      //宣告為子彈編號的變數
 int score = 0;                   
 
+void blit_str256(const char *str, int x, int y)
+{
+    for (int i = 0; i < strlen(str); i++)
+    {
+        if (str[i] >= '@' && str[i] <= ']')
+            wb32_blitBuf8(8 * (str[i] - '@'), 0, 240, x + i * 8, y, 8, 8, (uint8_t *)sprites);
+        if (str[i] >= '!' && str[i] <= '>')
+            wb32_blitBuf8(8 * (str[i] - '!'), 8, 240, x + i * 8, y, 8, 8, (uint8_t *)sprites);
+        if (str[i] == '?')
+            wb32_blitBuf8(8 * 14, 16, 240, x + i * 8, y, 8, 8, (uint8_t *)sprites);
+        if (str[i] == 'c')
+            wb32_blitBuf8(8 * 13, 16, 240, x + i * 8, y, 8, 8, (uint8_t *)sprites);
+        if (str[i] == 'w')
+            wb32_blitBuf8(7, 16, 240, x + i * 8, y, 26, 8, (uint8_t *)sprites);
+        if (str[i] == 'x')
+            wb32_blitBuf8(42, 16, 240, x + i * 8, y, 61, 8, (uint8_t *)sprites);
+    }
+}
+
+void blit_num256(uint16_t num, uint16_t x, uint16_t y, uint8_t color_mode)
+{
+    uint16_t d[5];
+
+    d[0] = num / 10000;
+    d[1] = (num - d[0] * 10000) / 1000;
+    d[2] = (num - d[0] * 10000 - d[1] * 1000) / 100;
+    d[3] = (num - d[0] * 10000 - d[1] * 1000 - d[2] * 100) / 10;
+    d[4] = num - d[0] * 10000 - d[1] * 1000 - d[2] * 100 - d[3] * 10;
+
+    for (int i = 0; i < 5; i++)
+    {
+        wb32_blitBuf8(d[i] * 8 + 120, color_mode * 8, 240, x + i * 8, y, 8, 8, (uint8_t *)sprites); //將d[0]~d[4]逐個顯示並排列
+    }
+}
+
 void setup()
 {
     currentTime = millis(); //現在時間為經過時間
@@ -63,6 +98,9 @@ void loop()
 
     currentTime = millis(); //當前時間每禎以毫秒更新
 
+    blit_str256("SCORE", 0, 0);
+    blit_num256(score, 40, 0, 1);
+
     for (int i = 0; i < 100; i++)
     {
         wb32_setBuf8(starsX[i] + starsY[i] * 240, starsColor); //(於buffer設定顯示的位置(0~76799),顏色)
@@ -73,7 +111,8 @@ void loop()
 
     MasterCtrl();
     EnemyCtrl();
-
+    Collision();
+    
     wb32_blit8();
 }
 
@@ -205,6 +244,7 @@ void Collision()
                 {
                     if (enemyX[j] <= bulletX[i] + 1 && enemyX[j] + 10 >= bulletX[i] && enemyY[j] + 10 >= bulletY[i])
                     {
+                        score++;
                         enemyAlive[j] = false;
                         enemyX[j] = random(0, 229);
                         enemyY[j] = -13;
