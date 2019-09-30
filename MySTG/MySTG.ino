@@ -22,7 +22,7 @@ unsigned long bulletSpawnCD;    //宣告子彈生成時間的變數
 int bulletState[100];           //宣告子彈狀態
 bool bulletAlive[100];          //宣告控制子彈存活的陣列
 unsigned int bulletNo = 0;      //宣告為子彈編號的變數
-int score = 0;                   
+int score = 0;                  //宣告分數變數
 
 void blit_str256(const char *str, int x, int y)
 {
@@ -95,7 +95,6 @@ void setup()
 void loop()
 {
     wb32_clearBuf8();
-
     currentTime = millis(); //當前時間每禎以毫秒更新
 
     blit_str256("SCORE", 0, 0);
