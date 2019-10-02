@@ -25,14 +25,6 @@ unsigned int bulletNo = 0;      //宣告為子彈編號的變數
 int score = 0;                  //宣告分數變數
 const uint8_t life = 3;         //宣告生命
 
-void LifeCount(uint16_t imageX, uint16_t imageY, int x, int y, u_int16_t imageW, u_int16_t imageH) //我們需要先知道用哪個圖片 還有圖片要放哪裡與他的寬度及高度來幫助計算下一張圖片放在哪裡
-{
-    for(int i = life; i < 0; i--)
-    {
-        wb32_blitBuf8(imageX, imageY, 240, x - i * imageW, y, imageW, imageH, (uint8_t *)sprites); //wb32_blitBuf8(int x:我們把最右側的生命圖示顯示出來後就能自動往左增加剩餘生命)
-    }
-}
-
 void blit_str256(const char *str, int x, int y)
 {
     for (int i = 0; i < strlen(str); i++)
@@ -108,6 +100,8 @@ void loop()
 
     blit_str256("SCORE", 0, 0);
     blit_num256(score, 40, 0, 1);
+    for(int i = life; i > 0; i--)
+        wb32_blitBuf8(4, 75, 240, 239 - i * 16, 0, 16, 21, (uint8_t *)sprites); //wb32_blitBuf8(int x:我們把最右側的生命圖示顯示出來後就能自動往左增加剩餘生命)
 
     for (int i = 0; i < 100; i++)
     {
