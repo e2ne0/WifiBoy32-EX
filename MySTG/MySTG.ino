@@ -76,7 +76,7 @@ void setup()
         starsX[i] = random(0, 240); //於第i個星星位置X隨機一個整數(0~240)
         starsY[i] = random(0, 320);
         starsSpeed[i] = random(2, 5);
-        bulletY[i] = 275; //初始化子彈的Y
+        bulletY[i] = 294; //初始化子彈的Y
         if (i < 10)       //加到10前執行以下
         {
             enemyX[i] = random(0, 229); //初始化敵機的X
@@ -111,9 +111,12 @@ void loop()
             starsY[i] = 0;                                     //回到0
     }
 
-    MasterCtrl();
-    EnemyCtrl();
-    Collision();
+    if (life > 0)
+    {
+        MasterCtrl();
+        EnemyCtrl();
+        Collision();
+    }
 
     wb32_blit8();
 }
@@ -140,7 +143,7 @@ void MasterCtrl()
 
 void PlayerMovement()
 {
-    wb32_blitBuf8(4, 75, 240, masterX, 280, 16, 21, (uint8_t *)sprites); //將主角顯示出來
+    wb32_blitBuf8(4, 75, 240, masterX, 299, 16, 21, (uint8_t *)sprites); //將主角顯示出來
     if (digitalRead(buttonLeft) == 0)                                    //按下IO17時
     {
         masterX -= 8;    //主角左移8像素
@@ -224,7 +227,7 @@ void BulletCtrl()
                 break;
 
             case 2: //消失
-                bulletY[i] = 275;
+                bulletY[i] = 294;
                 bulletAlive[i] = false;
                 break;
             }
@@ -252,6 +255,13 @@ void Collision()
                         enemyY[j] = -13;
                         bulletState[i] = 2;
                     }
+                    if (enemyY[j] >= 288 && enemyX[j] + 10 >= masterX && enemyX[j] <= masterX + 15)
+                    {
+                        life--;
+                        enemyAlive[j] = false;
+                        enemyX[j] = random(0, 229);
+                        enemyY[j] = -13;
+                    }
                 }
                 else
                     continue;
@@ -259,18 +269,5 @@ void Collision()
         }
         else
             continue;
-    }
-    for (int i = 0; i < 10; i++)
-    {
-        if (enemyAlive[i])
-        {
-            if (enemyY[i] <= 269 && enemyX[i] + 10 >= masterX && enemyX[i] <= masterX + 15)
-            {
-                life--;
-                enemyAlive[i] = false;
-                enemyX[i] = random(0, 229);
-                enemyY[i] = -13;
-            }
-        }
     }
 }
