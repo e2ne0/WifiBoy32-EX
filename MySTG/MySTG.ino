@@ -24,7 +24,7 @@ bool bulletAlive[100];          //宣告控制子彈存活的陣列
 unsigned int bulletNo = 0;      //宣告為子彈編號的變數
 int score = 0;                  //宣告分數變數
 uint8_t life = 3;               //宣告生命
-unsigned long soundStop;
+unsigned long soundStop;        //宣告控制音樂停止的變數
 
 void blit_str256(const char *str, int x, int y)
 {
@@ -63,21 +63,19 @@ void blit_num256(uint16_t num, uint16_t x, uint16_t y, uint8_t color_mode)
 
 void setup_sound()
 {
-    pinMode(17, OUTPUT);
-    digitalWrite(17, 1);
-    pinMode(25, OUTPUT);
+    pinMode(25, OUTPUT); //蜂鳴器的腳位
     ledcSetup(1, 400, 8);
     ledcAttachPin(25, 1);
 }
 
 void make_sound(int volume)
 {
-    ledcWrite(1, volume);
+    ledcWrite(1, volume); //寫入音量
 }
 
 void sound_freq(int freq)
 {
-    ledcSetup(1, freq, 8);
+    ledcSetup(1, freq, 8); //寫入音高
 }
 
 void setup()
@@ -276,9 +274,9 @@ void Collision()
                         enemyX[j] = random(0, 229);
                         enemyY[j] = -13;
                         bulletState[i] = 2;
-                        sound_freq(400);
-                        make_sound(30);
-                        soundStop = currentTime + 100;
+                        sound_freq(400); //設定音高為400
+                        make_sound(30); //設定音量為30
+                        soundStop = currentTime + 100; //設定停止時間為0.1秒後
                     }
                     if (enemyY[j] >= 288 && enemyX[j] + 10 >= masterX && enemyX[j] <= masterX + 15)
                     {
@@ -296,5 +294,5 @@ void Collision()
             continue;
     }
     if(currentTime > soundStop)
-        make_sound(0);
+        make_sound(0); //於停止時間把音量降為0
 }
