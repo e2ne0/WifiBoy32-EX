@@ -24,6 +24,7 @@ bool bulletAlive[100];          //宣告控制子彈存活的陣列
 unsigned int bulletNo = 0;      //宣告為子彈編號的變數
 int score = 0;                  //宣告分數變數
 uint8_t life = 3;               //宣告生命
+unsigned long soundStop;
 
 void blit_str256(const char *str, int x, int y)
 {
@@ -60,12 +61,32 @@ void blit_num256(uint16_t num, uint16_t x, uint16_t y, uint8_t color_mode)
     }
 }
 
+void setup_sound()
+{
+    pinMode(17, OUTPUT);
+    digitalWrite(17, 1);
+    pinMode(25, OUTPUT);
+    ledcSetup(1, 400, 8);
+    ledcAttachPin(25, 1);
+}
+
+void make_sound(int volume)
+{
+    ledcWrite(1, volume);
+}
+
+void sound_freq(int freq)
+{
+    ledcSetup(1, freq, 8);
+}
+
 void setup()
 {
     currentTime = millis(); //現在時間為經過時間
 
     wb32_init();
     wb32_initBuf8();
+    setup_sound();
     for (int i = 0; i < 256; i++)
         wb32_setPal8(i, wb32_color565(sprite_pal[i][0], sprite_pal[i][1], sprite_pal[i][2]));
 
@@ -91,6 +112,7 @@ void setup()
     enemyAlive[0] = true;              //設置第一個敵機為存活
 
     bulletSpawnCD = currentTime; //讓第一顆子彈馬上到出生時間
+
 }
 
 void loop()
@@ -254,6 +276,9 @@ void Collision()
                         enemyX[j] = random(0, 229);
                         enemyY[j] = -13;
                         bulletState[i] = 2;
+                        sound_freq(400);
+                        make_sound(30);
+                        soundStop = currentTime + 100;
                     }
                     if (enemyY[j] >= 288 && enemyX[j] + 10 >= masterX && enemyX[j] <= masterX + 15)
                     {
@@ -270,4 +295,6 @@ void Collision()
         else
             continue;
     }
+    if(currentTime > soundStop)
+        make_sound(0);
 }
