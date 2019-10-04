@@ -61,19 +61,19 @@ void blit_num256(uint16_t num, uint16_t x, uint16_t y, uint8_t color_mode)
     }
 }
 
-void setup_sound()
+void SetupSound()
 {
-    pinMode(25, OUTPUT); //蜂鳴器的腳位
-    ledcSetup(1, 400, 8);
-    ledcAttachPin(25, 1);
+    pinMode(25, OUTPUT);  //設定蜂鳴器的腳位為輸出
+    ledcSetup(1, 400, 8); //ledcSetup(設定頻道1的頻率為400解析度為8位元)
+    ledcAttachPin(25, 1); //ledcAttachPin(將腳位25定義為頻道1)
 }
 
-void make_sound(int volume)
+void MakeSound(int volume)
 {
     ledcWrite(1, volume); //寫入音量
 }
 
-void sound_freq(int freq)
+void SoundFreq(int freq)
 {
     ledcSetup(1, freq, 8); //寫入音高
 }
@@ -84,7 +84,7 @@ void setup()
 
     wb32_init();
     wb32_initBuf8();
-    setup_sound();
+    SetupSound();
     for (int i = 0; i < 256; i++)
         wb32_setPal8(i, wb32_color565(sprite_pal[i][0], sprite_pal[i][1], sprite_pal[i][2]));
 
@@ -110,7 +110,6 @@ void setup()
     enemyAlive[0] = true;              //設置第一個敵機為存活
 
     bulletSpawnCD = currentTime; //讓第一顆子彈馬上到出生時間
-
 }
 
 void loop()
@@ -274,8 +273,8 @@ void Collision()
                         enemyX[j] = random(0, 229);
                         enemyY[j] = -13;
                         bulletState[i] = 2;
-                        sound_freq(400); //設定音高為400
-                        make_sound(30); //設定音量為30
+                        SoundFreq(400);                //設定音高為400
+                        MakeSound(30);                 //設定音量為30
                         soundStop = currentTime + 100; //設定停止時間為0.1秒後
                     }
                     if (enemyY[j] >= 288 && enemyX[j] + 10 >= masterX && enemyX[j] <= masterX + 15)
@@ -293,6 +292,6 @@ void Collision()
         else
             continue;
     }
-    if(currentTime > soundStop)
-        make_sound(0); //於停止時間把音量降為0
+    if (currentTime > soundStop)
+        MakeSound(0); //於停止時間把音量降為0
 }
