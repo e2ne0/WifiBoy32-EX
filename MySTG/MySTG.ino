@@ -137,6 +137,9 @@ void loop()
         Collision();
     }
 
+    if (currentTime > soundStop)
+        MakeSound(0); //於停止時間把音量降為0
+
     wb32_blit8();
 }
 
@@ -283,6 +286,9 @@ void Collision()
                         enemyAlive[j] = false;
                         enemyX[j] = random(0, 229);
                         enemyY[j] = -13;
+                        SoundFreq(200);
+                        MakeSound(30);
+                        soundStop = currentTime + 100;
                     }
                 }
                 else
@@ -292,6 +298,4 @@ void Collision()
         else
             continue;
     }
-    if (currentTime > soundStop)
-        MakeSound(0); //於停止時間把音量降為0
 }
