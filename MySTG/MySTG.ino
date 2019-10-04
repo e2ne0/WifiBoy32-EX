@@ -9,7 +9,7 @@ uint16_t starsColor = 65535;    //宣告星星顏色並設為白色
 const uint8_t buttonLeft = 17;  //宣告向左移動的按鍵腳位為常量
 const uint8_t buttonRight = 32; //宣告向右移動的按鍵腳位為常量
 int masterX = 112;              //宣告主角位置X
-uint8_t masterState = 0;        //宣告主角狀態
+uint8_t masterStatus = 0;       //宣告主角狀態
 int enemyX[10];                 //宣告敵方位置X
 int enemyY[10];                 //宣告敵方位置Y
 unsigned long currentTime;      //宣告現在時間的變數
@@ -19,12 +19,13 @@ unsigned int enemyNo = 0;       //宣告為敵機編號的變數
 int bulletX[100];               //宣告子彈位置X
 int bulletY[100];               //宣告子彈位置Y
 unsigned long bulletSpawnCD;    //宣告子彈生成時間的變數
-int bulletState[100];           //宣告子彈狀態
+int bulletStatus[100];          //宣告子彈狀態
 bool bulletAlive[100];          //宣告控制子彈存活的陣列
 unsigned int bulletNo = 0;      //宣告為子彈編號的變數
 int score = 0;                  //宣告分數變數
 uint8_t life = 3;               //宣告生命
 unsigned long soundStop;        //宣告控制音樂停止的變數
+uint8_t sceneStatus;
 
 void blit_str256(const char *str, int x, int y)
 {
@@ -115,10 +116,10 @@ void setup()
 void loop()
 {
     wb32_clearBuf8();
-    currentTime = millis(); //當前時間每禎以毫秒更新
+    //currentTime = millis(); //當前時間每禎以毫秒更新
 
-    blit_str256("SCORE", 0, 0);
-    blit_num256(score, 40, 0, 1);
+    //blit_str256("SCORE", 0, 0);
+    //blit_num256(score, 40, 0, 1);
     for (int i = life; i > 0; i--)
         wb32_blitBuf8(4, 75, 240, 239 - i * 16, 0, 16, 21, (uint8_t *)sprites); //wb32_blitBuf8(int x:我們把最右側的生命圖示顯示出來後就能自動往左增加剩餘生命)
 
@@ -130,13 +131,13 @@ void loop()
             starsY[i] = 0;                                     //回到0
     }
 
-    if (life > 0)
+    /*if (life > 0)
     {
         MasterCtrl();
         EnemyCtrl();
         Collision();
-    }
-
+    }*/
+    SceneCtrl();
     if (currentTime > soundStop)
         MakeSound(0); //於停止時間把音量降為0
 
@@ -145,7 +146,7 @@ void loop()
 
 void MasterCtrl()
 {
-    switch (masterState)
+    switch (masterStatus)
     {
     case 0: //待機
         PlayerMovement();
@@ -168,8 +169,8 @@ void PlayerMovement()
     wb32_blitBuf8(4, 75, 240, masterX, 299, 16, 21, (uint8_t *)sprites); //將主角顯示出來
     if (digitalRead(buttonLeft) == 0)                                    //按下IO17時
     {
-        masterX -= 8;    //主角左移8像素
-        masterState = 1; //主角進入移動狀態
+        masterX -= 8;     //主角左移8像素
+        masterStatus = 1; //主角進入移動狀態
     }
     if (masterX < 0)
         masterX = 0;
@@ -177,13 +178,13 @@ void PlayerMovement()
     if (digitalRead(buttonRight) == 0)
     {
         masterX += 8; //主角右移8像素
-        masterState = 1;
+        masterStatus = 1;
     }
     if (masterX > 224)
         masterX = 224;
 
     if (digitalRead(buttonLeft) == 1 && digitalRead(buttonRight) == 1) //兩個按鍵都鬆開時
-        masterState = 0;                                               //主角進入待機狀態
+        masterStatus = 0;                                              //主角進入待機狀態
 }
 
 void EnemyCtrl()
@@ -221,7 +222,7 @@ void BulletCtrl()
     if (currentTime >= bulletSpawnCD)
     {
         bulletAlive[bulletNo] = true;
-        bulletState[bulletNo] = 0; //將子彈狀態歸0
+        bulletStatus[bulletNo] = 0; //將子彈狀態歸0
         if (bulletNo < 99)
             bulletNo += 1;
         else
@@ -232,11 +233,11 @@ void BulletCtrl()
     {
         if (bulletAlive[i])
         {
-            switch (bulletState[i])
+            switch (bulletStatus[i])
             {
             case 0:                       //出生定位
                 bulletX[i] = masterX + 6; //子彈會從主角的中心發射
-                bulletState[i]++;
+                bulletStatus[i]++;
                 break;
 
             case 1: //顯示與移動
@@ -244,7 +245,7 @@ void BulletCtrl()
                 wb32_blitBuf8(11, 70, 240, bulletX[i], bulletY[i], 2, 5, (uint8_t *)sprites);
                 if (bulletY[i] < 0)
                 {
-                    bulletState[i]++;
+                    bulletStatus[i]++;
                 }
                 break;
 
@@ -275,7 +276,7 @@ void Collision()
                         enemyAlive[j] = false;
                         enemyX[j] = random(0, 229);
                         enemyY[j] = -13;
-                        bulletState[i] = 2;
+                        bulletStatus[i] = 2;
                         SoundFreq(400);                //設定音高為400
                         MakeSound(30);                 //設定音量為30
                         soundStop = currentTime + 100; //設定停止時間為0.1秒後
@@ -297,5 +298,59 @@ void Collision()
         }
         else
             continue;
+    }
+}
+
+void SceneCtrl()
+{
+    switch (sceneStatus)
+    {
+    case 0:
+        if (digitalRead(buttonLeft) == 0 || digitalRead(buttonRight) == 0)
+            sceneStatus++;
+        blit_str256("PRESS L OR R", 71, 155);
+        break;
+
+    case 2:
+        blit_str256("SCORE", 0, 0);
+        blit_num256(score, 40, 0, 1);
+        MasterCtrl();
+        EnemyCtrl();
+        Collision();
+        if (life <= 0)
+        {
+            for (int i = 100; i < 100; i++)
+            {
+                if (i < 10)
+                {
+                    if (enemyAlive[i])
+                    {
+                        enemyY[i] = -13;
+                        enemyAlive[i] = false;
+                    }
+                }
+                if (bulletAlive[i])
+                    bulletStatus[i] = 2;
+            }
+            sceneStatus++;
+            delay(500);
+        }
+        break;
+
+    case 3:
+        if (digitalRead(buttonLeft) == 0 || digitalRead(buttonRight) == 0)
+        {
+            life = 3;
+            enemySpawnCD = currentTime + 1000;
+            enemyAlive[0] = true;
+            bulletSpawnCD = currentTime;
+            sceneStatus = 1;
+            score = 0;
+        }
+        blit_str256("PRESS L OR R", 71, 170);
+        blit_str256("GAMEOVER", 87, 162);
+        blit_str256("YOUR SCORE", 79, 200);
+        blit_num256(score, 99, 208, 1);
+        break;
     }
 }
