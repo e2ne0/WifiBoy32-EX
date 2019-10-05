@@ -343,7 +343,7 @@ void SceneCtrl()
 
     case 2:
         if (digitalRead(buttonLeft) == 0 || digitalRead(buttonRight) == 0)
-        {
+        { //當回到遊戲場景時要將數值初始化
             life = 3;
             enemySpawnCD = currentTime + 1000;
             enemyAlive[0] = true;
