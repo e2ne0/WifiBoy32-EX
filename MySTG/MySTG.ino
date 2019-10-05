@@ -25,7 +25,7 @@ unsigned int bulletNo = 0;      //宣告為子彈編號的變數
 int score = 0;                  //宣告分數變數
 uint8_t life = 3;               //宣告生命
 unsigned long soundStop;        //宣告控制音樂停止的變數
-uint8_t sceneStatus;
+uint8_t sceneStatus;            //宣告控制場景的變數
 
 void blit_str256(const char *str, int x, int y)
 {
@@ -318,7 +318,7 @@ void SceneCtrl()
         EnemyCtrl();
         Collision();
         if (life <= 0)
-        {
+        { //當life到達0時先將所有敵機與子彈從場上清除再到下一個場景
             for (int i = 100; i < 100; i++)
             {
                 if (i < 10)
@@ -339,7 +339,7 @@ void SceneCtrl()
 
     case 3:
         if (digitalRead(buttonLeft) == 0 || digitalRead(buttonRight) == 0)
-        {
+        { //當回到遊戲場景時要將數值初始化
             life = 3;
             enemySpawnCD = currentTime + 1000;
             enemyAlive[0] = true;
