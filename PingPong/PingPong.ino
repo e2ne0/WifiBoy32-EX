@@ -4,7 +4,7 @@
 
 int ball_x, ball_y;
 int ballSpeed;
-int ballState;
+int ballStatus;
 int upperBar = 100, lowerBar = 100;
 int moveDistance = 8;
 int score;
@@ -60,7 +60,7 @@ void setup()
 
     ball_x = ball_y = 100; //使ball_x與ball_y於一開始先為100
     ballSpeed = 8;
-    ballState = 0; //先將球的狀態設為往右下移動
+    ballStatus = 0; //先將球的狀態設為往右下移動
 }
 
 void loop()
@@ -82,25 +82,25 @@ void loop()
 
 void BallMovement() //增加一個名為BallMovement的功能
 {
-    switch (ballState) //switch偵測ballState的值來切換狀態
+    switch (ballStatus) //switch偵測ballStatus的值來切換狀態
     {
-    case 0: //當ballState為0時觸發本事件，依此推類，右下移動
+    case 0: //當ballStatus為0時觸發本事件，依此推類，右下移動
         ball_x += ballSpeed;
         ball_y += ballSpeed;
         if (ball_x >= 230) //當球到達右邊界需要向左下移動時
-            ballState = 1; //將球的狀態變更為1
+            ballStatus = 1; //將球的狀態變更為1
         if (ball_y >= 300) //球抵達球拍高度時
         {
             if ((ball_x + 10 >= lowerBar) && (ball_x <= lowerBar + 40)) //球如果在球排的範圍
             {
-                ballState = 2; //本來往右下碰到後改為右上
+                ballStatus = 2; //本來往右下碰到後改為右上
                 score++;       //增加分數
             }
             if (ball_y >= 320) //沒碰到球拍掉下去
             {
                 score = 0;             //分數歸0
                 ball_x = ball_y = 100; //球回到起始位置
-                ballState = 0;
+                ballStatus = 0;
                 delay(500); //延後0.5秒執行
             }
         }
@@ -110,19 +110,19 @@ void BallMovement() //增加一個名為BallMovement的功能
         ball_x -= ballSpeed;
         ball_y += ballSpeed;
         if (ball_x <= 0) //當球到達左邊界需要向右下移動時
-            ballState = 0;
+            ballStatus = 0;
         if (ball_y >= 300)
         {
             if ((ball_x + 10 >= lowerBar) && (ball_x <= lowerBar + 40))
             {
-                ballState = 3; //本來往左下碰到後改為左上
+                ballStatus = 3; //本來往左下碰到後改為左上
                 score++;
             }
             if (ball_y >= 320)
             {
                 score = 0;
                 ball_x = ball_y = 100;
-                ballState = 0;
+                ballStatus = 0;
                 delay(500);
             }
         }
@@ -132,19 +132,19 @@ void BallMovement() //增加一個名為BallMovement的功能
         ball_x += ballSpeed;
         ball_y -= ballSpeed;
         if (ball_x >= 230) //當球到達右邊界需要向左上移動時
-            ballState = 3;
+            ballStatus = 3;
         if (ball_y <= 10)
         {
             if ((ball_x + 10 >= upperBar) && (ball_x <= upperBar + 40))
             {
-                ballState = 0; //本來往右上碰到後改為右下
+                ballStatus = 0; //本來往右上碰到後改為右下
                 score++;
             }
             if (ball_y < 0)
             {
                 score = 0;
                 ball_x = ball_y = 100;
-                ballState = 0;
+                ballStatus = 0;
                 delay(500);
             }
         }
@@ -154,19 +154,19 @@ void BallMovement() //增加一個名為BallMovement的功能
         ball_x -= ballSpeed;
         ball_y -= ballSpeed;
         if (ball_x <= 0) //當球到達左邊界需要向右上移動時
-            ballState = 2;
+            ballStatus = 2;
         if (ball_y <= 10)
         {
             if ((ball_x + 10 >= upperBar) && (ball_x <= upperBar + 40))
             {
-                ballState = 1; //本來往左上碰到後改為左下
+                ballStatus = 1; //本來往左上碰到後改為左下
                 score++;
             }
             if (ball_y < 0)
             {
                 score = 0;
                 ball_x = ball_y = 100;
-                ballState = 0;
+                ballStatus = 0;
                 delay(500);
             }
         }
