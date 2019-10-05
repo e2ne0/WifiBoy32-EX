@@ -25,7 +25,7 @@ unsigned int bulletNo = 0;      //宣告為子彈編號的變數
 int score = 0;                  //宣告分數變數
 uint8_t life = 3;               //宣告生命
 unsigned long soundStop;        //宣告控制音樂停止的變數
-uint8_t sceneStatus;
+uint8_t sceneStatus;            //宣告控制場景的變數
 
 void blit_str256(const char *str, int x, int y)
 {
@@ -107,10 +107,10 @@ void setup()
     pinMode(buttonLeft, INPUT);
     pinMode(buttonRight, INPUT);
 
-    enemySpawnCD = currentTime + 1000; //讓下台敵機出生CD為1秒後
-    enemyAlive[0] = true;              //設置第一個敵機為存活
+    //enemySpawnCD = currentTime + 1000; //讓下台敵機出生CD為1秒後
+    //enemyAlive[0] = true;              //設置第一個敵機為存活
 
-    bulletSpawnCD = currentTime; //讓第一顆子彈馬上到出生時間
+    //bulletSpawnCD = currentTime; //讓第一顆子彈馬上到出生時間
 }
 
 void loop()
@@ -307,37 +307,41 @@ void SceneCtrl()
     {
     case 0:
         if (digitalRead(buttonLeft) == 0 || digitalRead(buttonRight) == 0)
+        {
+            enemySpawnCD = currentTime + 1000;
+            enemyAlive[0] = true;
+            bulletSpawnCD = currentTime;
             sceneStatus++;
+        }
         blit_str256("PRESS L OR R", 71, 155);
         break;
 
-    case 2:
+    case 1:
         blit_str256("SCORE", 0, 0);
         blit_num256(score, 40, 0, 1);
+        currentTime = millis();
         MasterCtrl();
         EnemyCtrl();
         Collision();
         if (life <= 0)
-        {
-            for (int i = 100; i < 100; i++)
+        { //當life到達0時先將所有敵機與子彈從場上清除再到下一個場景
+            enemyNo = 0;
+            bulletNo = 0;
+            for (int i = 0; i < 100; i++)
             {
                 if (i < 10)
                 {
-                    if (enemyAlive[i])
-                    {
-                        enemyY[i] = -13;
-                        enemyAlive[i] = false;
-                    }
+                    enemyAlive[i] = false;
+                    enemyY[i] = -13;
                 }
-                if (bulletAlive[i])
-                    bulletStatus[i] = 2;
+                bulletStatus[i] = 2;
             }
             sceneStatus++;
             delay(500);
         }
         break;
 
-    case 3:
+    case 2:
         if (digitalRead(buttonLeft) == 0 || digitalRead(buttonRight) == 0)
         {
             life = 3;
@@ -347,6 +351,7 @@ void SceneCtrl()
             sceneStatus = 1;
             score = 0;
         }
+        MakeSound(0);
         blit_str256("PRESS L OR R", 71, 170);
         blit_str256("GAMEOVER", 87, 162);
         blit_str256("YOUR SCORE", 79, 200);
