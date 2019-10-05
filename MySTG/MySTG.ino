@@ -103,14 +103,14 @@ void setup()
             enemyY[i] = -13;            //初始化敵機的Y
         }
     }
-    //pinMode(35, INPUT);
+
     pinMode(buttonLeft, INPUT);
     pinMode(buttonRight, INPUT);
 
-    //enemySpawnCD = currentTime + 1000; //讓下台敵機出生CD為1秒後
-    //enemyAlive[0] = true;              //設置第一個敵機為存活
+    // enemySpawnCD = currentTime + 1000; //讓下台敵機出生CD為1秒後
+    // enemyAlive[0] = true;              //設置第一個敵機為存活
 
-    //bulletSpawnCD = currentTime; //讓第一顆子彈馬上到出生時間
+    // bulletSpawnCD = currentTime; //讓第一顆子彈馬上到出生時間
 }
 
 void loop()
@@ -131,12 +131,12 @@ void loop()
             starsY[i] = 0;                                     //回到0
     }
 
-    /*if (life > 0)
-    {
-        MasterCtrl();
-        EnemyCtrl();
-        Collision();
-    }*/
+    // if (life > 0)
+    // {
+    //     MasterCtrl();
+    //     EnemyCtrl();
+    //     Collision();
+    // }
     SceneCtrl();
     if (currentTime > soundStop)
         MakeSound(0); //於停止時間把音量降為0
@@ -305,7 +305,7 @@ void SceneCtrl()
 {
     switch (sceneStatus)
     {
-    case 0:
+    case 0: //遊戲開始
         if (digitalRead(buttonLeft) == 0 || digitalRead(buttonRight) == 0)
         {
             enemySpawnCD = currentTime + 1000;
@@ -316,7 +316,7 @@ void SceneCtrl()
         blit_str256("PRESS L OR R", 71, 155);
         break;
 
-    case 1:
+    case 1: //遊戲中
         blit_str256("SCORE", 0, 0);
         blit_num256(score, 40, 0, 1);
         currentTime = millis();
@@ -341,7 +341,7 @@ void SceneCtrl()
         }
         break;
 
-    case 2:
+    case 2: //遊戲結束
         if (digitalRead(buttonLeft) == 0 || digitalRead(buttonRight) == 0)
         { //當回到遊戲場景時要將數值初始化
             life = 3;
