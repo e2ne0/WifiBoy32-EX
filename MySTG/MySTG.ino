@@ -116,7 +116,7 @@ void setup()
 void loop()
 {
     wb32_clearBuf8();
-    //currentTime = millis(); //當前時間每禎以毫秒更新
+    //currentTime = millis(); //當前時間在每禎以毫秒更新
 
     //blit_str256("SCORE", 0, 0);
     //blit_num256(score, 40, 0, 1);
