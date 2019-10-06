@@ -337,7 +337,7 @@ void SceneCtrl()
                 bulletStatus[i] = 2;
             }
             sceneStatus++;
-            delay(500);
+            delay(500); //給一個小延遲產生結束的感受
         }
         break;
 
