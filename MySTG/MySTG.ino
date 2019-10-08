@@ -116,29 +116,28 @@ void setup()
 void loop()
 {
     wb32_clearBuf8();
-    //currentTime = millis(); //當前時間在每禎以毫秒更新
+    currentTime = millis(); //當前時間在每禎以毫秒更新
 
-    //blit_str256("SCORE", 0, 0);
-    //blit_num256(score, 40, 0, 1);
-    // for (int i = life; i > 0; i--)
-    //     wb32_blitBuf8(4, 75, 240, 239 - i * 16, 0, 16, 21, (uint8_t *)sprites); //wb32_blitBuf8(int x:我們把最右側的生命圖示顯示出來後就能自動往左增加剩餘生命)
+    blit_str256("SCORE", 0, 0);
+    blit_num256(score, 40, 0, 1);
+    for (int i = life; i > 0; i--)
+        wb32_blitBuf8(4, 75, 240, 239 - i * 16, 0, 16, 21, (uint8_t *)sprites); //wb32_blitBuf8(int x:我們把最右側的生命圖示顯示出來後就能自動往左增加剩餘生命)
 
-    // for (int i = 0; i < 100; i++)
+    for (int i = 0; i < 100; i++)
+    {
+        wb32_setBuf8(starsX[i] + starsY[i] * 240, starsColor); //(於buffer設定顯示的位置(0~76799),顏色)
+        starsY[i] += starsSpeed[i];                            //第i個星星位置Y以第i個星星速度增加
+        if (starsY[i] >= 320)                                  //當第i個星星位置Y超過320
+            starsY[i] = 0;                                     //回到0
+    }
+
+    // if (life > 0)
     // {
-    //     wb32_setBuf8(starsX[i] + starsY[i] * 240, starsColor); //(於buffer設定顯示的位置(0~76799),顏色)
-    //     starsY[i] += starsSpeed[i];                            //第i個星星位置Y以第i個星星速度增加
-    //     if (starsY[i] >= 320)                                  //當第i個星星位置Y超過320
-    //         starsY[i] = 0;                                     //回到0
+    //     MasterCtrl();
+    //     EnemyCtrl();
+    //     Collision();
     // }
-
-    // // if (life > 0)
-    // // {
-    // //     MasterCtrl();
-    // //     EnemyCtrl();
-    // //     Collision();
-    // // }
-    // SceneCtrl();
-    wb32_blitBuf8(0,0,240,0,0,240,320,(uint8_t*) sprites2);
+    SceneCtrl();
     if (currentTime > soundStop)
         MakeSound(0); //於停止時間把音量降為0
 
