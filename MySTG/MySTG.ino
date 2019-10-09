@@ -323,6 +323,7 @@ void SceneCtrl()
         MasterCtrl();
         EnemyCtrl();
         Collision();
+        digitalWrite(23,HIGH);
         if (life <= 0)
         { //當life到達0時先將所有敵機與子彈從場上清除再到下一個場景
             enemyNo = 0;
@@ -338,7 +339,6 @@ void SceneCtrl()
             }
             sceneStatus++;
             delay(500); //給一個小延遲產生結束的感受
-            digitalWrite(23,HIGH);
         }
         break;
 
