@@ -106,7 +106,7 @@ void setup()
 
     pinMode(buttonLeft, INPUT);
     pinMode(buttonRight, INPUT);
-
+    pinMode(23, OUTPUT);
     // enemySpawnCD = currentTime + 1000; //讓下台敵機出生CD為1秒後
     // enemyAlive[0] = true;              //設置第一個敵機為存活
 
@@ -338,6 +338,7 @@ void SceneCtrl()
             }
             sceneStatus++;
             delay(500); //給一個小延遲產生結束的感受
+            digitalWrite(23,HIGH);
         }
         break;
 
