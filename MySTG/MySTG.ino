@@ -314,6 +314,7 @@ void SceneCtrl()
             sceneStatus++;
         }
         blit_str256("PRESS L OR R", 71, 155);
+        digitalWrite(23,LOW);
         break;
 
     case 1: //遊戲中
@@ -357,6 +358,7 @@ void SceneCtrl()
         blit_str256("GAMEOVER", 87, 162);
         blit_str256("YOUR SCORE", 79, 200);
         blit_num256(score, 99, 208, 1);
+        digitalWrite(23,LOW);
         break;
     }
 }
