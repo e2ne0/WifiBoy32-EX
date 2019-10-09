@@ -30,9 +30,9 @@ void blit_str256(const char *str, int x, int y)
 
 void blit_num256(uint16_t num, uint16_t x, uint16_t y, uint8_t color_mode)
 {
-    uint16_t d[5]; //宣告一個型別為uint16_t的變數陣列d
+    uint16_t d[5]; //宣告一個型別為uint16_t的變數陣列d因為是5位數所以陣列大小為5
 
-    d[0] = num / 10000;                                               //算出num的萬位放入d[0]
+    d[0] = num / 10000;                                               //算出num的萬位放入d[0] uint16_t只會取整數值
     d[1] = (num - d[0] * 10000) / 1000;                               //算出num的千位放入d[1]
     d[2] = (num - d[0] * 10000 - d[1] * 1000) / 100;                  //算出num的百位放入d[2]
     d[3] = (num - d[0] * 10000 - d[1] * 1000 - d[2] * 100) / 10;      //算出num的十位放入d[3]
@@ -41,7 +41,7 @@ void blit_num256(uint16_t num, uint16_t x, uint16_t y, uint8_t color_mode)
     for (int i = 0; i < 5; i++)
     {
         wb32_blitBuf8(d[i] * 8 + 120, color_mode * 8, 240, x + i * 8, y, 8, 8, (uint8_t *)sprites); //將d[0]~d[4]逐個顯示並排列
-    }
+    } //color_mode只會是1 2 4 5因為sprites中只有這些行數有數字
 }
 
 void setup()
