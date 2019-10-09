@@ -1,0 +1,108 @@
+1570590262782	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "-marionette" "-foreground" "-no-remote" "-profile" "/var/folders/qc/k5430lfd543_ndc_n1vbqz_40000gn/T/rust_mozprofile.q2UUApJVUZOg"
+1570590263369	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1570590263369	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: telemetry
+1570590263369	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1570590263369	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+1570590265013	Marionette	INFO	Listening on port 54215
+1570590265038	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: https://www.digole.com/javascripts/digole_emu_tool.js?9, line 1577: TypeError: document.getElementById(...) is null
+1570590278272	Marionette	INFO	Stopped listening on port 54215
+1570590560315	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "-marionette" "-foreground" "-no-remote" "-profile" "/var/folders/qc/k5430lfd543_ndc_n1vbqz_40000gn/T/rust_mozprofile.vJSMpMJaGquN"
+1570590560673	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1570590560673	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: telemetry
+1570590560673	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1570590560673	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+1570590562013	Marionette	INFO	Listening on port 54310
+1570590562055	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: https://www.digole.com/javascripts/digole_emu_tool.js?9, line 1577: TypeError: document.getElementById(...) is null
+1570590584177	Marionette	INFO	Stopped listening on port 54310
+1570591039245	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "-marionette" "-foreground" "-no-remote" "-profile" "/var/folders/qc/k5430lfd543_ndc_n1vbqz_40000gn/T/rust_mozprofile.iQz3aOBvqdTH"
+1570591039609	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1570591039609	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: telemetry
+1570591039609	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1570591039609	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+1570591040931	Marionette	INFO	Listening on port 54407
+1570591040988	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: https://www.digole.com/javascripts/digole_emu_tool.js?9, line 1577: TypeError: document.getElementById(...) is null
+1570591078716	Marionette	INFO	Stopped listening on port 54407
+1570591082482	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "-marionette" "-foreground" "-no-remote" "-profile" "/var/folders/qc/k5430lfd543_ndc_n1vbqz_40000gn/T/rust_mozprofile.LnzeTtV0EwAL"
+1570591082837	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1570591082837	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: telemetry
+1570591082837	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1570591082837	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+1570591084231	Marionette	INFO	Listening on port 54459
+1570591084328	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: https://www.digole.com/javascripts/digole_emu_tool.js?9, line 1577: TypeError: document.getElementById(...) is null
+1570591661481	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "-marionette" "-foreground" "-no-remote" "-profile" "/var/folders/qc/k5430lfd543_ndc_n1vbqz_40000gn/T/rust_mozprofile.O0WOzRUY8kwj"
+1570591661909	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1570591661909	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: telemetry
+1570591661909	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1570591661909	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+1570591663341	Marionette	INFO	Listening on port 54568
+1570591663418	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: https://www.digole.com/javascripts/digole_emu_tool.js?9, line 1577: TypeError: document.getElementById(...) is null
+1570591699949	Marionette	INFO	Stopped listening on port 54568
+1570591702864	Marionette	INFO	Stopped listening on port 54459
+1570591705944	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "-marionette" "-foreground" "-no-remote" "-profile" "/var/folders/qc/k5430lfd543_ndc_n1vbqz_40000gn/T/rust_mozprofile.CLuDUdQwvqKL"
+1570591706301	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1570591706301	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: telemetry
+1570591706301	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1570591706301	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+1570591707645	Marionette	INFO	Listening on port 54625
+1570591707686	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: https://www.digole.com/javascripts/digole_emu_tool.js?9, line 1577: TypeError: document.getElementById(...) is null
+1570591730363	Marionette	INFO	Stopped listening on port 54625
+1570591748829	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "-marionette" "-foreground" "-no-remote" "-profile" "/var/folders/qc/k5430lfd543_ndc_n1vbqz_40000gn/T/rust_mozprofile.Xz3R38GNPeeq"
+1570591749195	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1570591749195	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: telemetry
+1570591749195	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1570591749195	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+1570591750565	Marionette	INFO	Listening on port 54680
+1570591750660	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: https://www.digole.com/javascripts/digole_emu_tool.js?9, line 1577: TypeError: document.getElementById(...) is null
+1570591820507	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "-marionette" "-foreground" "-no-remote" "-profile" "/var/folders/qc/k5430lfd543_ndc_n1vbqz_40000gn/T/rust_mozprofile.p7xR1p7mqibZ"
+1570591820870	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1570591820870	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: telemetry
+1570591820870	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1570591820870	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+1570591822225	Marionette	INFO	Listening on port 54736
+1570591822243	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: https://www.digole.com/javascripts/digole_emu_tool.js?9, line 1577: TypeError: document.getElementById(...) is null
+1570591840234	Marionette	INFO	Stopped listening on port 54736
+1570591843005	Marionette	INFO	Stopped listening on port 54680
+1570592787283	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "-marionette" "-foreground" "-no-remote" "-profile" "/var/folders/qc/k5430lfd543_ndc_n1vbqz_40000gn/T/rust_mozprofile.rbe75SWoPP33"
+1570592787644	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1570592787644	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: telemetry
+1570592787644	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1570592787644	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+1570592789004	Marionette	INFO	Listening on port 54877
+1570592789025	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: https://www.digole.com/javascripts/digole_emu_tool.js?9, line 1577: TypeError: document.getElementById(...) is null
+1570593318788	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "-marionette" "-foreground" "-no-remote" "-profile" "/var/folders/qc/k5430lfd543_ndc_n1vbqz_40000gn/T/rust_mozprofile.gaTjLg79QQwz"
+1570593319152	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1570593319152	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: telemetry
+1570593319153	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1570593319153	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+1570593320527	Marionette	INFO	Listening on port 54967
+1570593320630	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: https://www.digole.com/javascripts/digole_emu_tool.js?9, line 1577: TypeError: document.getElementById(...) is null
+1570593396288	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "-marionette" "-foreground" "-no-remote" "-profile" "/var/folders/qc/k5430lfd543_ndc_n1vbqz_40000gn/T/rust_mozprofile.dxGPzFeIyNar"
+1570593396733	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1570593396733	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: telemetry
+1570593396733	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1570593396733	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+1570593398131	Marionette	INFO	Listening on port 55049
+1570593398231	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: https://www.digole.com/javascripts/digole_emu_tool.js?9, line 1577: TypeError: document.getElementById(...) is null
+1570593519104	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "-marionette" "-foreground" "-no-remote" "-profile" "/var/folders/qc/k5430lfd543_ndc_n1vbqz_40000gn/T/rust_mozprofile.h9shSHlx62xT"
+1570593519515	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1570593519515	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: telemetry
+1570593519515	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1570593519515	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+1570593520922	Marionette	INFO	Listening on port 55122
+1570593520940	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: https://www.digole.com/javascripts/digole_emu_tool.js?9, line 1577: TypeError: document.getElementById(...) is null
+1570593544718	Marionette	INFO	Stopped listening on port 55122
+1570593546772	Marionette	INFO	Stopped listening on port 55049
+1570593550729	Marionette	INFO	Stopped listening on port 54967
+1570593554468	Marionette	INFO	Stopped listening on port 54877
