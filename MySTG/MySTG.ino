@@ -103,14 +103,13 @@ void setup()
             enemyY[i] = -13;            //初始化敵機的Y
         }
     }
-    pinMode(22,OUTPUT);
+
     pinMode(buttonLeft, INPUT);
     pinMode(buttonRight, INPUT);
     pinMode(23, OUTPUT);
     // enemySpawnCD = currentTime + 1000; //讓下台敵機出生CD為1秒後
     // enemyAlive[0] = true;              //設置第一個敵機為存活
-    pinMode(21, OUTPUT);
-    pinMode(26, OUTPUT);
+
     // bulletSpawnCD = currentTime; //讓第一顆子彈馬上到出生時間
 }
 
@@ -140,10 +139,7 @@ void loop()
     // }
     SceneCtrl();
     if (currentTime > soundStop)
-    {
         MakeSound(0); //於停止時間把音量降為0
-        digitalWrite(26,LOW);
-    }
     // wb32_blitBuf8(0, 0, 240,0,0,240,320, (uint8_t *)sprites2);
     wb32_blit8();
 }
@@ -166,12 +162,11 @@ void MasterCtrl()
 
         break;
     }
-    
 }
 
 void PlayerMovement()
 {
-    wb32_blitBuf8(4, 75, 240, masterX, 299, 16, 21, (uint8_t *)sprites); //將主角顯示出來
+    wb32_blitBuf8(240, 240, 240, masterX, 299, 16, 21, (uint8_t *)sprites); //將主角顯示出來
     if (digitalRead(buttonLeft) == 0)                                    //按下IO17時
     {
         masterX -= 8;     //主角左移8像素
@@ -209,7 +204,7 @@ void EnemyCtrl()
         if (enemyAlive[i]) //當本敵機存活時
         {
             enemyY[i] += 3; //設定向下飛的速度
-            wb32_blitBuf8(3, 150, 240, enemyX[i], enemyY[i], 11, 11, (uint8_t *)sprites);
+            wb32_blitBuf8(266, 248, 240, enemyX[i], enemyY[i], 11, 11, (uint8_t *)sprites);
             if (enemyY[i] > 320) //當飛出畫面底部時
             {
                 enemyX[i] = random(0, 229); //重新設置X位置
@@ -247,7 +242,7 @@ void BulletCtrl()
 
             case 1: //顯示與移動
                 bulletY[i] -= 10;
-                wb32_blitBuf8(11, 70, 240, bulletX[i], bulletY[i], 2, 5, (uint8_t *)sprites);
+                wb32_blitBuf8(261, 250, 240, bulletX[i], bulletY[i], 2, 5, (uint8_t *)sprites);
                 if (bulletY[i] < 0)
                 {
                     bulletStatus[i]++;
@@ -284,7 +279,6 @@ void Collision()
                         bulletStatus[i] = 2;
                         SoundFreq(400);                //設定音高為400
                         MakeSound(30);                 //設定音量為30
-                        // digitalWrite(26,HIGH);
                         soundStop = currentTime + 100; //設定停止時間為0.1秒後
                     }
                     if (enemyY[j] >= 288 && enemyX[j] + 10 >= masterX && enemyX[j] <= masterX + 15)
@@ -321,8 +315,6 @@ void SceneCtrl()
         }
         blit_str256("PRESS L OR R", 71, 155);
         digitalWrite(23,LOW);
-        digitalWrite(22,LOW);
-        digitalWrite(21,HIGH);
         break;
 
     case 1: //遊戲中
@@ -333,8 +325,6 @@ void SceneCtrl()
         EnemyCtrl();
         Collision();
         digitalWrite(23,HIGH);
-        digitalWrite(22,LOW);
-        digitalWrite(21,LOW);
         if (life <= 0)
         { //當life到達0時先將所有敵機與子彈從場上清除再到下一個場景
             enemyNo = 0;
@@ -369,8 +359,6 @@ void SceneCtrl()
         blit_str256("YOUR SCORE", 79, 200);
         blit_num256(score, 99, 208, 1);
         digitalWrite(23,LOW);
-        digitalWrite(22,LOW);
-        digitalWrite(21,LOW);
         break;
     }
 }
