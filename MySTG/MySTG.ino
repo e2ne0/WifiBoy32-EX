@@ -122,7 +122,7 @@ void loop()
     blit_str256("SCORE", 0, 0);
     blit_num256(score, 40, 0, 1);
     for (int i = life; i > 0; i--)
-        wb32_blitBuf8(4, 75, 240, 239 - i * 16, 0, 16, 21, (uint8_t *)sprites); //wb32_blitBuf8(int x:我們把最右側的生命圖示顯示出來後就能自動往左增加剩餘生命)
+        wb32_blitBuf8(240, 240, 240, 239 - i * 16, 0, 16, 21, (uint8_t *)sprites); //wb32_blitBuf8(int x:我們把最右側的生命圖示顯示出來後就能自動往左增加剩餘生命)
 
     for (int i = 0; i < 100; i++)
     {
