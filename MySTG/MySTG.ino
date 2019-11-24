@@ -334,7 +334,7 @@ void SceneCtrl()
         Collision();
         digitalWrite(23,HIGH);
         digitalWrite(22,LOW);
-        digitalWrite(21,LOW);
+        digitalWrite(21,0);
         if (life <= 0)
         { //當life到達0時先將所有敵機與子彈從場上清除再到下一個場景
             enemyNo = 0;
@@ -370,7 +370,7 @@ void SceneCtrl()
         blit_num256(score, 99, 208, 1);
         digitalWrite(23,LOW);
         digitalWrite(22,LOW);
-        digitalWrite(21,LOW);
+        digitalWrite(21,0);
         break;
     }
 }
